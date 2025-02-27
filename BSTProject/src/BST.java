@@ -31,6 +31,7 @@ public class BST implements BSTInterface
             addHelper(newVal, root.getRight(), root);
     } //end add
 
+
     private void addHelper(Comparable val, TreeNode child, TreeNode parent){
         if (child == null){
             if (val.compareTo(parent.getValue())<=0)
@@ -44,17 +45,102 @@ public class BST implements BSTInterface
             addHelper(val, child.getRight(), child);
     } //end addHelper
 
+
     public boolean find(Comparable toFind){
         return true;
     } //end method find
+
 
 	public boolean replace(Comparable old, Comparable toAdd){
         return true;
     }//end method replace
 
+
 	public boolean delete(Comparable old){
-        return true;
-    }
+        if (root==null)
+            return false;
+        if (root.getValue().equals(old)){
+            if (root.getLeft()!=null && root.getRight() != null)
+            {
+                TreeNode temp = root.getLeft();
+                TreeNode temp2 = temp;
+                while (temp2.getRight()!=null)
+                {
+                    temp2 = temp2.getRight();
+                }//end while
+                temp2.setRight(root.getRight());
+                root.setRight(null); root.setLeft(null);
+                root = temp;
+            } //end inner if BOTH CHILDREN EXIST
+            else if (root.getLeft()!=null && root.getRight() == null){
+                TreeNode temp = root.getLeft();
+                root.setLeft(null);
+                root=temp;
+            }//end inner if ONLY LEFT CHILD
+            else if (root.getLeft()==null && root.getRight()!=null){
+                TreeNode temp = root.getRight();
+                root.setRight(null);
+                root=temp;
+            }//end inner if ONLY RIGHT CHILD
+            else{
+                root=null;
+            }//end inner else NO CHILDREN
+            size--;
+            return true;
+        }//end outer if
+        else if (old.compareTo(root.getValue())<0){
+            return deleteHelper(old, root,root.getLeft());
+        }//end outer else if
+        else{
+            return deleteHelper(old, root, root.getRight());
+        }//end outer else
+    } //end method delete
+
+
+    private boolean deleteHelper(Comparable value, TreeNode parent, TreeNode child){
+        if (child == null)
+            return false;
+        
+        if (child.getValue().equals(value)){
+            if (child.getLeft()!=null && child.getRight()!=null){
+                TreeNode temp = child.getLeft();
+                if (value.compareTo(parent.getValue())<0)
+                    parent.setLeft(temp);
+                else 
+                    parent.setRight(temp);
+                while (temp.getRight()!=null){
+                    temp=temp.getRight();
+                }//end while
+                temp.setRight(child.getRight());
+            }//end inner if BOTH CHILDREN EXIST
+            else if (child.getLeft()!=null && child.getRight()==null){
+                if (value.compareTo(parent.getValue())<0)
+                    parent.setLeft(child.getLeft());
+                else 
+                    parent.setRight(child.getLeft());
+                child.setLeft(null);
+            }//end inner if ONLY LEFT CHILD
+            else if (child.getLeft()==null && child.getRight()!=null){
+                if (value.compareTo(parent.getValue())<0)
+                    parent.setLeft(child.getRight());
+                else 
+                    parent.setRight(child.getRight());
+            }//end inner if ONLY RIGHT CHILD
+            else{
+                if (value.compareTo(parent.getValue())<0)
+                parent.setLeft(null);
+            else 
+                parent.setRight(null);
+            }//end inner else NO CHILDREN
+            size--;
+            return true;
+        }//end outer if 
+        else if (value.compareTo(child.getValue())<0)
+            return deleteHelper(value,child,child.getLeft());
+        else
+            return deleteHelper(value,child,child.getRight());
+    }//end method deleteHelper
+
 
 	public void printInOrder(){
         if (root!=null){
@@ -64,6 +150,7 @@ public class BST implements BSTInterface
         }//end if
     }//end method printInOrder
 
+
     private void printInHelper(TreeNode subroot){
         if (subroot!=null){
             printInHelper(subroot.getLeft());
@@ -71,6 +158,7 @@ public class BST implements BSTInterface
             printInHelper(subroot.getRight());
         }//end if
     }//end helper method printInHelper
+
 
 	public void printPreOrder(){
         if (root!=null){
@@ -80,6 +168,7 @@ public class BST implements BSTInterface
         }//end if
     } //emd method printPreOrder
 	
+
     private void printPreHelper(TreeNode subroot){
         if (subroot!=null){
             System.out.print(subroot.getValue() + ", ");
@@ -88,6 +177,7 @@ public class BST implements BSTInterface
         }//end if
     }//end helper method printPreHelper
 
+
 	public void printPostOrder(){
         if (root!=null){
             printPostHelper(root.getLeft());
@@ -95,6 +185,7 @@ public class BST implements BSTInterface
             System.out.print(root.getValue() + ", ");
         }//end if
     } //end method printPostOrder
+
 
     private void printPostHelper(TreeNode subroot){
         if (subroot!=null){
