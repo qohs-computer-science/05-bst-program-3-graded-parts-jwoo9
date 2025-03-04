@@ -35,7 +35,25 @@
       System.out.println("Deleting R (Only left child): " + tree.delete("R"));
       printStatus(tree);
       
-      
+      //start finds
+      System.out.println("Testing Finds");
+      System.out.println("Find Q: " + tree.find("Q"));
+      System.out.println("Find L: " + tree.find("L"));
+      System.out.println("Find C: " + tree.find("C"));
+      System.out.println("Find N: " + tree.find("N"));
+      System.out.println("Find E: " + tree.find("E"));
+
+      //start replaces
+      System.out.println("Testing replace");
+      System.out.println("Replace I with X: " + tree.replace("I", "X"));
+      printStatus(tree);
+      System.out.println("Replace M (doesn't exist) with L" + tree.replace("M", "L"));
+      printStatus(tree);
+      System.out.println("Replace E with J: " + tree.replace("E", "J"));
+      printStatus(tree);
+      System.out.println("Replace L with O: " + tree.replace("L", "O"));
+      printStatus(tree);
+
     } //end main
 
 
@@ -48,9 +66,10 @@
       System.out.println();
       System.out.println("Post Order: ");
       tree.printPostOrder();
-      System.out.println("\n");
+      System.out.println();
       System.out.println("Tree Empty: " + tree.isEmpty());
       System.out.println("Tree Size: " + tree.size());
+      System.out.println("\n");
     }//end method printStatus
 
 

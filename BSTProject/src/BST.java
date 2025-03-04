@@ -47,12 +47,39 @@ public class BST implements BSTInterface
 
 
     public boolean find(Comparable toFind){
-        return true;
+        if (root == null)
+            return false;   
+        else if (root.getValue().equals(toFind))
+            return true;
+        else if (toFind.compareTo(root.getValue())<0)
+            return findHelper(toFind, root.getLeft());
+        else
+            return findHelper(toFind,root.getRight());
     } //end method find
 
 
+    private boolean findHelper(Comparable val, TreeNode child){
+        if (child==null)
+            return false;
+        else if (child.getValue().equals(val))
+            return true;
+        else if (val.compareTo(child.getValue())<0)
+            return findHelper(val, child.getLeft());
+        else
+            return findHelper(val,child.getRight());
+    }//end method findHelper
+
+
 	public boolean replace(Comparable old, Comparable toAdd){
-        return true;
+        if (find(old)){
+            delete(old);
+            add(toAdd);
+            return true;
+        }//end if
+        else{
+            add(toAdd);
+            return false;
+        }//end else
     }//end method replace
 
 
